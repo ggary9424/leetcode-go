@@ -12,9 +12,15 @@ func pathSum(root *TreeNode, sum int) int {
     }
 
     c := 0
-    traverse(root, func (node *TreeNode) {
-        c += calculate(node, sum)
+    cChan := make(chan int)
+    nodeCount := traverse(root, func (node *TreeNode) {
+        cChan <- calculate(node, sum)
     })
+
+    for i:=0;i<nodeCount;i++ {
+        c += <-cChan
+    }
+
     return c
 }
 
@@ -33,17 +39,20 @@ func calculate(root *TreeNode, sum int) int {
     return c1 + c2
 }
 
-func traverse(node *TreeNode, callback func (*TreeNode)) {
+func traverse(node *TreeNode, callback func (*TreeNode)) int {
+    c1, c2 := 0, 0
     if node == nil {
-        return
+        return 0
     }
-    callback(node)
+
+    go callback(node)
     if node.Left != nil {
-        traverse(node.Left, callback)
+        c1 = traverse(node.Left, callback)
     }
     if node.Right != nil {
-        traverse(node.Right, callback)
+        c2 = traverse(node.Right, callback)
     }
+    return 1 + c1 + c2
 }
 
 func main() {
