@@ -1,4 +1,4 @@
-package main
+package leetcode_go
 
 import (
     "testing"
@@ -42,5 +42,9 @@ func TestPathSum(t *testing.T) {
             },
         },
     }
-    pathSum(tree, 8)
+    
+    result := pathSum(tree, 8)
+    if result != 3 {
+        t.Errorf("The result should be 3, but we got %d", result)
+    }
 }

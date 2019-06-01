@@ -1,4 +1,4 @@
-package main
+package leetcode_go
 
 type TreeNode struct {
     Val int
@@ -53,45 +53,4 @@ func traverse(node *TreeNode, callback func (*TreeNode)) int {
         c2 = traverse(node.Right, callback)
     }
     return 1 + c1 + c2
-}
-
-func main() {
-    tree := &TreeNode{
-        Val: 10,
-        Left: &TreeNode{
-            Val: 5,
-            Left: &TreeNode{
-                Val: 3,
-                Left: &TreeNode{
-                    Val: 3,
-                    Left: nil,
-                    Right: nil,
-                },
-                Right: &TreeNode{
-                    Val: -2,
-                    Left: nil,
-                    Right: nil,
-                },
-            },
-            Right: &TreeNode{
-                Val: 2,
-                Left: nil,
-                Right: &TreeNode{
-                    Val: 1,
-                    Left: nil,
-                    Right: nil,
-                },
-            },
-        },
-        Right: &TreeNode{
-            Val: -3,
-            Left: nil,
-            Right: &TreeNode{
-                Val: 11,
-                Left: nil,
-                Right: nil,
-            },
-        },
-    }
-    println(pathSum(tree, 8))
 }
